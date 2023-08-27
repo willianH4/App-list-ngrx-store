@@ -8,3 +8,7 @@ export const customIncrement = createAction(
   'customIncrement',
   props<{ count: number }>()
 );
+
+export const changeActivityName = createAction(
+  'changeNameActivity'
+);
