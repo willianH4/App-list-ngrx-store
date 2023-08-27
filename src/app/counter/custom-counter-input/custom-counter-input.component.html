@@ -1,6 +1,6 @@
 <div>
   <div class="my-3">
-    {{ activity }}
+    {{ (activity$ | async) }}
   </div>
   <input class="form-input" type="text" placeholder="enter value" [(ngModel)]="value"/>
   <button class="btn btn-primary" (click)="onAdd()">Add to counter</button>
