@@ -4,6 +4,7 @@ import { CounterState } from '../state/counter.state';
 import { changeActivityName, customIncrement } from '../state/counter.actions';
 import { getActivityName } from '../state/counter.selectors';
 import { Observable } from 'rxjs';
+import { AppState } from 'src/app/data/store-global/app.state';
 
 @Component({
   selector: 'app-custom-counter-input',
@@ -16,7 +17,7 @@ export class CustomCounterInputComponent implements OnInit {
   activity$!: Observable<string>;
 
   constructor(
-    private store: Store<{ counter: CounterState }>
+    private store: Store<AppState>
   ) { }
 
   ngOnInit(): void {
