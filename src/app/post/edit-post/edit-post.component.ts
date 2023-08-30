@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/data/store-global/app.state';
 import { getPostById } from '../state/post.selector';
 import { Post } from 'src/app/data/models/post.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { updatePost } from '../state/post.action';
 
 @Component({
   selector: 'app-edit-post',
@@ -25,7 +26,8 @@ export class EditPostComponent implements OnInit, OnDestroy {
   constructor(
     private ar: ActivatedRoute,
     private store: Store<AppState>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private rt: Router
   ) { }
 
 
@@ -71,7 +73,20 @@ export class EditPostComponent implements OnInit, OnDestroy {
   }
 
   onUpdatePost() {
-    console.log(this.postForm.value);
+    if (!this.postForm.valid) {
+      this.postForm.markAllAsTouched();
+      return;
+    }
+    const { title, description } = this.postForm.value;
+    const post: Post = {
+      id: Number(this.post?.id),
+      title,
+      description
+    };
+
+    this.store.dispatch(updatePost({post}));
+    this.rt.navigate(['post']);
+
   }
 
   ngOnDestroy(): void {
