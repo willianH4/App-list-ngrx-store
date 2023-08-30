@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Post } from 'src/app/data/models/post.model';
 import { AppState } from 'src/app/data/store-global/app.state';
 import { addPost } from '../state/post.action';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-post',
@@ -19,7 +20,8 @@ export class AddPostComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private rt: Router
   ) { }
 
   ngOnInit(): void {
@@ -54,12 +56,14 @@ export class AddPostComponent implements OnInit {
       this.postForm.markAllAsTouched();
       return;
     }
+
     const post:Post = {
       title: this.postForm.value.title,
       description: this.postForm.value.description
-    }
-    console.log(post);
+    };
+
     this.store.dispatch(addPost( {post} ));
+    this.rt.navigate(['post']);
   }
 
 }
