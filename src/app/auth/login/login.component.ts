@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/data/store-global/app.state';
+import { loginStart } from '../state/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +17,8 @@ export class LoginComponent implements OnInit {
   })
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private store: Store<AppState>
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +51,8 @@ export class LoginComponent implements OnInit {
       this.formAuth.markAllAsTouched();
       return;
     }
-    console.log(this.formAuth.value);
+    const { email, password } = this.formAuth.value;
+    this.store.dispatch(loginStart({email, password}));
   }
 
 }
