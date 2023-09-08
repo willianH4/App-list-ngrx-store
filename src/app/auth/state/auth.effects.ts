@@ -19,7 +19,8 @@ export class AuthEffects {
       exhaustMap((action) => {
         return this.auths.login(action.email, action.password).pipe(
           map((data) => {
-            return loginSuccess();
+            const user = this.auths.formatUser(data);
+            return loginSuccess({ user });
           })
         );
       })
