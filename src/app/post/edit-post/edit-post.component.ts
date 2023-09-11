@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/data/store-global/app.state';
+import { AppState } from '../../store/app.state';
 import { getPostById } from '../state/post.selector';
 import { Post } from 'src/app/data/models/post.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

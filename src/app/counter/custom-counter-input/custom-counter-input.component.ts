@@ -4,7 +4,7 @@ import { CounterState } from '../state/counter.state';
 import { changeActivityName, customIncrement } from '../state/counter.actions';
 import { getActivityName } from '../state/counter.selectors';
 import { Observable } from 'rxjs';
-import { AppState } from 'src/app/data/store-global/app.state';
+import { AppState } from '../../store/app.state';
 
 @Component({
   selector: 'app-custom-counter-input',

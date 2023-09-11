@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Post } from 'src/app/data/models/post.model';
-import { AppState } from 'src/app/data/store-global/app.state';
+import { AppState } from '../../store/app.state';
 import { addPost } from '../state/post.action';
 import { Router } from '@angular/router';
 
