@@ -42,21 +42,7 @@ export class AuthEffects {
 
   loginRedirect$ = createEffect(() => {
     return this.actions$.pipe(
-        ofType(loginSuccess),
-        tap((action) => {
-          this.store.dispatch(setErrroMessage({ message: '' }));
-          this.router.navigate(['/']);
-        })
-      );
-    },
-    {
-      dispatch: false
-    }
-  );
-
-  signUpRedirect$ = createEffect(() => {
-    return this.actions$.pipe(
-        ofType(signupSuccess),
+        ofType( ...[loginSuccess, signupSuccess] ),
         tap((action) => {
           this.store.dispatch(setErrroMessage({ message: '' }));
           this.router.navigate(['/']);
