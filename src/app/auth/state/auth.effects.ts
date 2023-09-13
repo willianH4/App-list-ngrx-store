@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, ofType, createEffect } from "@ngrx/effects";
-import { autoLogin, loginStart, loginSuccess, signUpStart, signupSuccess } from "./auth.actions";
+import { autoLogin, autoLogout, loginStart, loginSuccess, signUpStart, signupSuccess } from "./auth.actions";
 import { catchError, exhaustMap, map, mergeMap, of, tap } from "rxjs";
 import { AuthService } from "../../data/services/auth/auth.service";
 import { Store } from "@ngrx/store";
@@ -29,7 +29,7 @@ export class AuthEffects {
             this.store.dispatch(setErrroMessage({ message: '' }));
             const user = this.auths.formatUser(data);
             this.auths.setUserInLocalStorage(user);
-            return loginSuccess({ user });
+            return loginSuccess({ user, redirect: true });
           }),
           catchError(({ error }) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
@@ -46,7 +46,7 @@ export class AuthEffects {
         ofType( ...[loginSuccess, signupSuccess] ),
         tap((action) => {
           this.store.dispatch(setErrroMessage({ message: '' }));
-          this.router.navigate(['/']);
+          if ( action.redirect ) this.router.navigate(['/']);
         })
       );
     },
@@ -63,7 +63,7 @@ export class AuthEffects {
           map((data) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             const user = this.auths.formatUser(data);
-            return signupSuccess({ user });
+            return signupSuccess({ user, redirect: true });
           }),
           catchError(({ error }) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
@@ -78,13 +78,20 @@ export class AuthEffects {
   autoLogin$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(autoLogin),
-      map((action) => {
-        const user = this.auths.getUsarFromLocalStorage();
-        console.log('local', user);
+      mergeMap((action) => {
+        const user = this.auths.getUsarFromLocalStorage()!;
+        return of(loginSuccess({ user, redirect: false }));
       })
     )
-  }, {
-    dispatch: false
   });
+
+  autoLogout$ = createEffect(() => {
+    return this.actions$.pipe(ofType(autoLogout),
+    map((action) => {
+        this.auths.logout();
+        this.router.navigate(['auth'])
+      }),
+    );
+  }, {dispatch: false});
 
 }
