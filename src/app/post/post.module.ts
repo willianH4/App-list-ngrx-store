@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { postsReducer } from './state/post.reducer';
 import { POST_STATE_NAME } from './state/post.selector';
+import { EffectsModule } from '@ngrx/effects';
+import { PostsEffects } from './state/post.effects';
 
 
 @NgModule({
@@ -23,6 +25,7 @@ import { POST_STATE_NAME } from './state/post.selector';
     ReactiveFormsModule,
     FormsModule,
     StoreModule.forFeature(POST_STATE_NAME, postsReducer),
+    EffectsModule.forFeature([PostsEffects]),
   ],
   exports: [
     CommonModule
