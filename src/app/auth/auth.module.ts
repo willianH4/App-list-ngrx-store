@@ -19,7 +19,7 @@ import { SignupComponent } from './signup/signup.component';
     AuthRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    EffectsModule.forFeature([AuthEffects])
+    EffectsModule.forFeature()
   ]
 })
 export class AuthModule { }

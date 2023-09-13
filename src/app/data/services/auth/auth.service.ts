@@ -10,6 +10,8 @@ import { User } from '../../models/user.model';
 })
 export class AuthService {
 
+  timeOutInterval: any;
+
   constructor(
     private http: HttpClient
   ) { }
@@ -28,6 +30,34 @@ export class AuthService {
     const expirationDate = new Date(new Date().getTime() + +data.expiresIn * 1000);
     const user = new User(data.email, data.idToken, data.localId, expirationDate);
     return user;
+  }
+
+  setUserInLocalStorage(user: User) {
+    localStorage.setItem('userData', JSON.stringify(user));
+
+    this.runTimeOutInterval(user);
+  }
+
+  runTimeOutInterval(user: User) {
+    const todaysDate = new Date().getTime();
+    const expirationDate = user.expireDate.getTime();
+    const timeInterval = expirationDate - todaysDate;
+
+    this.timeOutInterval = setTimeout(() => {
+
+    }, timeInterval);
+  }
+
+  getUsarFromLocalStorage() {
+    const userDataString = localStorage.getItem('userData');
+    if ( userDataString ) {
+      const userData = JSON.parse(userDataString);
+      const expirationDate = new Date(userData.expirationDate);
+      const user = new User(userData.email, userData.token, userData.localId, expirationDate);
+      this.runTimeOutInterval(user);
+      return user;
+    }
+    return null;
   }
 
   getErrorMessage( message: string ) {
