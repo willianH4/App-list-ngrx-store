@@ -24,7 +24,7 @@ export class PostListComponent implements OnInit {
     this.store.dispatch(loadPost());
   }
 
-  onDeletePost(id?: number) {
+  onDeletePost(id?: number | string) {
     if (confirm('Are you sure you want to delete')) {
       this.store.dispatch(deletePost({ id }));
     }
