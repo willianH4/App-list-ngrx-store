@@ -29,4 +29,15 @@ export class PostService {
     return this.http.post<{name: string}>(`https://examplengrxangular-default-rtdb.firebaseio.com/posts.json`, post)
   }
 
+  updatePost(post: Post) {
+    const postData = {
+      [post.id!.toString()]: { title: post.title, description: post.description },
+    };
+    return this.http.patch(`https://examplengrxangular-default-rtdb.firebaseio.com/posts.json`, postData)
+  }
+
+  deletePost(id: string) {
+    return this.http.delete(`https://examplengrxangular-default-rtdb.firebaseio.com/posts/${ id }.json`);
+  }
+
 }

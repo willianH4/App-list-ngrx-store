@@ -33,7 +33,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.ar.paramMap.subscribe((params) => {
-      const id = Number(params.get('id'));
+      const id = params.get('id');
       this.postSubcription = this.store.select(getPostById, { id }).subscribe((data) => {
         this.post = data;
         this.resetValuesForm();
@@ -79,7 +79,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
     }
     const { title, description } = this.postForm.value;
     const post: Post = {
-      id: Number(this.post?.id),
+      id: this.post!.id,
       title,
       description
     };
