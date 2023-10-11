@@ -94,4 +94,16 @@ export class AuthEffects {
     );
   }, {dispatch: false});
 
+  logout$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(autoLogout),
+        map((action) => {
+          this.auths.logout();
+          this.router.navigate(['auth']);
+        })
+      );
+    }, { dispatch: false }
+  )
+
 }
