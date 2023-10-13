@@ -32,13 +32,22 @@ export class EditPostComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.ar.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      this.postSubcription = this.store.select(getPostById, { id }).subscribe((data) => {
-        this.post = data;
+    // form without router state
+    // this.ar.paramMap.subscribe((params) => {
+    //   const id = params.get('id');
+    //   this.postSubcription = this.store.select(getPostById, { id }).subscribe((data) => {
+    //     this.post = data;
+    //     this.resetValuesForm();
+    //   });
+    // })
+
+    // with router state
+    this.postSubcription = this.store.select(getPostById).subscribe((post) => {
+      if ( post ) {
+        this.post = post;
         this.resetValuesForm();
-      });
-    })
+      }
+    });
   }
 
   invalidInput( campo: string ) {
