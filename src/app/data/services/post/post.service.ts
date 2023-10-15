@@ -40,4 +40,8 @@ export class PostService {
     return this.http.delete(`https://examplengrxangular-default-rtdb.firebaseio.com/posts/${ id }.json`);
   }
 
+  getPostById(id: string): Observable<Post> {
+    return this.http.get<Post>(`https://examplengrxangular-default-rtdb.firebaseio.com/posts/${ id }.json`);
+  }
+
 }

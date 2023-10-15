@@ -23,6 +23,8 @@
           <td>
             <a class="btn btn-primary" [routerLink]="['edit', post.id]">Update</a>
             &nbsp;
+            <a class="btn btn-info" [routerLink]="['details', post.id]">Details</a>
+            &nbsp;
             <button class="btn btn-danger" (click)="onDeletePost(post.id!.toString())">Delete</button>
           </td>
         </tr>
