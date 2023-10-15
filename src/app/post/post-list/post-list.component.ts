@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Post } from 'src/app/data/models/post.model';
 import { AppState } from '../../store/app.state';
-import { getPosts } from '../state/post.selector';
+import { getCount, getPosts } from '../state/post.selector';
 import { deletePost, loadPost } from '../state/post.action';
 
 @Component({
@@ -14,6 +14,7 @@ import { deletePost, loadPost } from '../state/post.action';
 export class PostListComponent implements OnInit {
 
   posts?: Observable<Post[]>;
+  count?: Observable<number>;
 
   constructor(
     private store: Store<AppState>,
@@ -21,6 +22,7 @@ export class PostListComponent implements OnInit {
 
   ngOnInit(): void {
     this.posts = this.store.select(getPosts);
+    this.count = this.store.select(getCount);
     this.store.dispatch(loadPost());
   }
 

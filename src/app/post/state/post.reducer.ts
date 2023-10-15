@@ -5,7 +5,7 @@ import { Post } from "src/app/data/models/post.model";
 
 const _postsReducer = createReducer(initialState,
   on(addPostSuccess, (state, action) => {
-    return postsAdapter.addOne(action.post, state)
+    return postsAdapter.addOne(action.post, { ...state, count: state.count + 1 })
   }),
   on(updatePostSuccess, (state: PostsState, action:any) => {
     return postsAdapter.updateOne(action.post, state);
@@ -14,7 +14,7 @@ const _postsReducer = createReducer(initialState,
     return postsAdapter.removeOne(id!.toString(), state)
   }),
   on(loadPostSuccess, (state, action) => {
-    return postsAdapter.setAll(action.post, state);
+    return postsAdapter.setAll(action.post, { ...state, count: state.count + 1 });
   })
 );
 
